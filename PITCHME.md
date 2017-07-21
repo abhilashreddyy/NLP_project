@@ -44,7 +44,7 @@ WC generated from keywords related to question
 ![Sentiment Pie Chart](/images/wordcloud.png)
 +++
 ### But !!!
-* It *takes 7 to 8 minutes* for returning result
+* topic detection *takes 7 to 8 minutes* for returning result
 * Some part of request does not support asynchronous requests
 ![Sentiment Pie Chart](/images/topicwise.png)
 * Extracting keywords related to question take 6 to 7 seconds of compilation
@@ -59,11 +59,15 @@ WC generated from keywords related to question
     * dependency edge of syntax tree
     * lemma of each word
 * Googel NLP service als have *entity analysis* which extracts *common nouns* from text
++++
+
+### WC generated from google cloud data
+
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
 
 ---
 ### Asynchronous nature of code
-#(best ans most intresting part of application)
+####(best ans most intresting part of application)
 * First I sent http request to REST services **one by one**
   * as a result it **took 30 seconds** for each time compile and run
 * Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
