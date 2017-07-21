@@ -13,9 +13,10 @@
 # What this application can do ?
 +++
 ## Generates Word Cloud from text
+![Word Cloud image](/images/wordcloud.png =70*40)
 
----?/images/wordcloud.png&size=auto 50%
 this is an image generated from answers about
+
 What is professional excellence ?
 +++
 ## Generates Pie charts illustrating sentiment of data
