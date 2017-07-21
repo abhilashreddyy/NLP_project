@@ -13,7 +13,7 @@
 # What this application can do ?
 +++
 ## Generates Word Cloud from text
-![Word Cloud image](/images/wordcloud.png =70*40)
+![Word Cloud image](/images/wordcloud.png =70x40)
 
 this is an image generated from answers about
 
