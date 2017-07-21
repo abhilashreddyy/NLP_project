@@ -13,11 +13,11 @@
 # What this application can do ?
 +++
 ### Generates Word Cloud from text
-![Word Cloud image](/images/wordcloud.png)
+![Word Cloud image](/images/wordcloud.png) |this is an image generated from answers about
+-------------------------------------------|----------------------------------------------
+|What is professional excellence ?
 
-this is an image generated from answers about
 
-What is professional excellence ?
 +++
 ### Generates Pie charts illustrating sentiment of data
 ![Sentiment Pie Chart](/images/piechart.png)
