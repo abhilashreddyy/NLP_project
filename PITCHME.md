@@ -14,8 +14,7 @@
 +++
 ### Generates Word Cloud from text
 
-     <img src="images/wordcloud.png" width="500" height = "300">
-
+<img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
 
 this is an image generated from answers about question
 What is professional excellence ?
