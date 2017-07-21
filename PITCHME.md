@@ -1,5 +1,5 @@
 
-### Smart Contracts using 
+### Smart Contracts using
 ###Natural Language Processing(NLP)
 
 ---
@@ -11,5 +11,8 @@
 ---
 ###what this application can do ?
 +++
-### Generates word cloud from keywords
+### Generates Word Cloud from text
 ![Word Cloud image](/images/wordcloud.png)
++++
+### Generates Pie charts illustrating sentiment of data
+![Sentiment Pie Chart](/images/piechart.png)
