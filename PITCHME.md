@@ -97,3 +97,29 @@ WC generated from keywords related to question
 @[49-57](returns data in sheet)
 
 ---
+
+###sending async request to azure cloud service
+* Trigger to sends all requests
+* stores their memory locations
+* waits until all responds
+
+
++++?code=azure.py&lang=python
+@[179-191](loads required parameters)
+@[192-193](transfer control for sending async request and location)
+@[172-176](async function)
+@[199-200](waits until response)
+@[201-219](filter required data and handle exceptions)
+
+---
+## generating word cloud and pie chart
++++?code=azure.py&lang=python
+@[142-149](word cloud generation)
+@[151-169](piechart generation)
+
+---
+### Remaining processing
+* Same thing done with topic detection
+  * but a little complicated(code)
+* Then extrcated related keywords in answers from given keys
+* S ame thing done with google API with some changes in format of input and output
