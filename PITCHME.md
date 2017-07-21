@@ -36,7 +36,7 @@ WC generated from topics | WC generated from keys
 -------------------------|------------------------
 
 
-<img src="images/topicwise.png" width="300" height = "170" float = 'right'>|<img src="/images/keywordwise1.png" width="300" height = "170" float = 'right'>
+<img src="images/topicwise.png" width="300" height = "170" >|<img src="/images/keywordwise1.png" width="300" height = "170">
 
 +++
 
@@ -67,7 +67,7 @@ WC generated from keywords related to question
 
 ---
 ### Asynchronous nature of code
-####(best ans most intresting part of application)
+* (best ans most intresting part of application)
 * First I sent http request to REST services **one by one**
   * as a result it **took 30 seconds** for each time compile and run
 * Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
