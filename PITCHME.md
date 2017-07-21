@@ -3,7 +3,7 @@
 ### Natural Language Processing(NLP)
 
 ---
-#### What is this application about ?
+# What is this application about ?
 +++
 * Surveys consists of large amount of text
 * Time consuming to read all the text and come to a conclusion
@@ -13,7 +13,7 @@
 # What this application can do ?
 +++
 ## Generates Word Cloud from text
-![Word Cloud image](/images/wordcloud.png)
+![Word Cloud image](/images/wordcloud.png&size=auto 70% 40%)
 this is an image generated from answers about
 What is professional excellence ?
 +++
@@ -67,4 +67,3 @@ WC generated from keywords related to question
 ---
 # Design of Application
 +++
- 
