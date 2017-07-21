@@ -114,7 +114,7 @@ WC generated from keywords related to question
 ---
 ## generating word cloud and pie chart
 +++?code=azure.py&lang=python
-@[142-149](word cloud generation)
+@[142-149](word cloud generation)   
 @[151-169](piechart generation)
 
 ---
