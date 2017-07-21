@@ -1,16 +1,16 @@
 
-### Smart Contracts using
+### Text Analysing Application using
 ### Natural Language Processing(NLP)
 
 ---
-# What is this application about ?
+## What is this application about ?
 +++
 * Surveys consists of large amount of text
 * Time consuming to read all the text and come to a conclusion
 * This application gives better intution over data in less time
 * Uses azure and google NLP cloud services
 ---
-# What this application can do ?
+## What this application can do ?
 +++
 ### Generates Word Cloud from text
 
@@ -58,7 +58,7 @@ WC generated from keywords related to question
     * parts of speech (tag,mood,tense etc.)
     * dependency edge of syntax tree
     * lemma of each word
-* Googel NLP service als have *entity analysis* which extracts *common nouns* from text
+* Google NLP service als have *entity analysis* which extracts *common nouns* from text
 +++
 
 ### WC generated from google cloud data
@@ -72,9 +72,12 @@ WC generated from keywords related to question
   * as a result it **took 30 seconds** for each time compile and run
 * Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
+
++++
 * Not only this as the code is written in python
   * It have good scope for furthur development
   * Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
+  * Very easy to use ife we integrate this application with google docs or microsoft online excel sheets
 
 ---
 # Design of Application
