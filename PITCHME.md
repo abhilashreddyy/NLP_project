@@ -31,21 +31,25 @@ What is professional excellence ?
 * Uses azure *topic detection* for generating topic of each sentence (word cloud)
   * keys generated avoids noise in image
 * also uses WUP similarity for generating Word-Cloud related to keywords in question​
-+++
-WC generated from topics | WC generated from keys
--------------------------|------------------------
-<img src="images/topicwise.png" width="300" height = "170" >|![Sentiment Pie Chart](/images/keywordwise1.png)
 
-+++
-
-WC generated from keywords related to question
-![Sentiment Pie Chart](/images/wordcloud.png)
 +++
 ### But !!!
 * topic detection *takes 7 to 8 minutes* for returning result
 * Some part of request does not support asynchronous requests
 ![Sentiment Pie Chart](/images/topicwise.png)
 * Extracting keywords related to question take 6 to 7 seconds of compilation
+![Sentiment Pie Chart](/images/wordcloud.png)
+
++++
+WC generated from topics
+![Sentiment Pie Chart](images/topicwise.png)
++++
+
+WC generated from keys
+![Sentiment Pie Chart](/images/keywordwise1.png)
++++
+
+WC generated from keywords related to question
 ![Sentiment Pie Chart](/images/wordcloud.png)
 
 ---
