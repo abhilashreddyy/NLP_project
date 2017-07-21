@@ -82,4 +82,18 @@ WC generated from keywords related to question
 
 ---
 # Design of Application
-+++
+---
+
+###reading from file
+* decides no of columns by considering no of headings
+* decides no of rows by considering no of numbers in first column
+* returns 2d list of strings and dimensions of each sheet and name of sheets in workbook(excel file)
+* next slide consists of code chunk which performs this operation
+
++++?code=azure.py&lang=python
+@[37-47](loads parameters and file required to read)
+@[48](finds dimensions of sheet)
+@[21-33](finds dimensions of sheet)
+@[49-57](returns data in sheet)
+
+---
