@@ -122,4 +122,4 @@ WC generated from keywords related to question
 * Same thing done with topic detection
   * but a little complicated(code)
 * Then extrcated related keywords in answers from given keys
-* S ame thing done with google API with some changes in format of input and output
+* Same thing done with google API with some changes in format of input and output
