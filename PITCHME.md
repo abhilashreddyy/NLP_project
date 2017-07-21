@@ -34,8 +34,6 @@ What is professional excellence ?
 +++
 WC generated from topics | WC generated from keys
 -------------------------|------------------------
-
-
 <img src="images/topicwise.png" width="300" height = "170" >|<img src="/images/keywordwise1.png" width="300" height = "170">
 
 +++
@@ -74,10 +72,10 @@ WC generated from keywords related to question
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 
 +++
-* Not only this as the code is written in python
-  * It have good scope for furthur development
-  * Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
-  * Very easy to use ife we integrate this application with google docs or microsoft online excel sheets
+### Not only this as the code is written in python
+* It have good scope for furthur development
+* Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
+* Very easy to use ife we integrate this application with google docs or microsoft online excel sheets
 
 ---
 # Design of Application
