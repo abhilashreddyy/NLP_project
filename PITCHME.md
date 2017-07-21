@@ -13,11 +13,9 @@
 # What this application can do ?
 +++
 ### Generates Word Cloud from text
-   |   
----|---
-![Word Cloud image](/images/wordcloud.png) |this is an image generated from answers about
-|What is professional excellence ?
-
+![Word Cloud image](/images/wordcloud.png) |this is an image generated from answers about question
+-------------------------------------------|----------------------------------------------
+What is professional excellence ?|
 
 
 +++
