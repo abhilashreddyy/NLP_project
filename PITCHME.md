@@ -36,9 +36,7 @@ What is professional excellence ?
 ### But !!!
 * topic detection *takes 7 to 8 minutes* for returning result
 * Some part of request does not support asynchronous requests
-![Sentiment Pie Chart](/images/topicwise.png)
 * Extracting keywords related to question take 6 to 7 seconds of compilation
-![Sentiment Pie Chart](/images/wordcloud.png)
 
 +++
 WC generated from topics
