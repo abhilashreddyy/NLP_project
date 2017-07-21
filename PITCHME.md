@@ -34,7 +34,11 @@ What is professional excellence ?
 +++
 WC generated from topics | WC generated from keys
 -------------------------|------------------------
-![topics](/images/topicwise.png)|![key words](/images/keywordwise1.png)
+
+
+<img src="images/topicwise.png" width="300" height = "170" float = 'right'>|<img src="/images/keywordwise1.png" width="300" height = "170" float = 'right'>
+
++++
 
 WC generated from keywords related to question
 ![Sentiment Pie Chart](/images/wordcloud.png)
