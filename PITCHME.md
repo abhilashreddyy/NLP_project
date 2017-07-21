@@ -13,7 +13,8 @@
 # What this application can do ?
 +++
 ### Generates Word Cloud from text
----?image=images/wordcloud.png&size=90% 90%
+
+<img src="images/wordcloud.png" width="100" height = "70">
 this is an image generated from answers about question
 What is professional excellence ?
 
