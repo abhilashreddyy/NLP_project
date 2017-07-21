@@ -12,14 +12,14 @@
 ---
 # What this application can do ?
 +++
-## Generates Word Cloud from text
+#### Generates Word Cloud from text
 ![Word Cloud image](/images/wordcloud.png =70x40)
 
 this is an image generated from answers about
 
 What is professional excellence ?
 +++
-## Generates Pie charts illustrating sentiment of data
+### Generates Pie charts illustrating sentiment of data
 ![Sentiment Pie Chart](/images/piechart.png)
 
 ---
