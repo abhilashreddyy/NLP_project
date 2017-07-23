@@ -6,6 +6,9 @@
 ## What is this application about ?
 +++
 * Surveys consists of large amount of text
+  * I this case we have an excel file
+  * File consists of sheets
+  * each file consists of questions and multiple answers by multiple people
 * Time consuming to read all the text and come to a conclusion
 * This application gives better intution over data in less time
 * Uses azure and google NLP cloud services
@@ -66,19 +69,20 @@ WC generated from keywords related to question
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
 
 ---
+### Why this application written in python ?
+* as the code is written in python
+  * It have good scope for furthur development
+  * Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
+  * Very easy to use on integrating this application with google docs or microsoft online excel sheets
+
++++
+
 ### Asynchronous nature of code
 * (best ans most intresting part of application)
 * First I sent http request to REST services **one by one**
   * as a result it **took 30 seconds** for each time compile and run
 * Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
-
-+++
-### Not only this !!!
-* as the code is written in python
-  * It have good scope for furthur development
-  * Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
-  * Very easy to use on integrating this application with google docs or microsoft online excel sheets
 
 ---
 # Design of Application
@@ -123,3 +127,9 @@ WC generated from keywords related to question
   * but a little complicated(code)
 * Then extrcated related keywords in answers from given keys
 * Same thing done with google API with some changes in format of input and output
+
+---
+## Future scope
+* If integrated with online google or microsoft excel sheets
+  * Can directly analyse online discussion forums
+* Can add a function for gathering most relevant reviews or answers for given keywords 
