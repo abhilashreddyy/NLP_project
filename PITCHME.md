@@ -90,7 +90,7 @@ WC generated from keywords related to question
 google | azure
 -------|-------
 Returns a dictionary object | returns a json formatted string
-takes 2.5to2.6 seconds for performing sentiment and keyword analysis | takes  seconds for performing sentiment and keyword
+takes 2.5to2.6 seconds for performing sentiment and keyword analysis | takes 2.2-2.3 seconds for performing sentiment and keyword
 Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
 +++
 google | azure
