@@ -19,9 +19,9 @@ Screen shot of input data
 ---
 ## What this application can do ?
 +++
-### generates a excel file which is similar to provided excel file but sentiment and keywords are appended to data
+### 1. generates a excel file which is similar to provided excel file but sentiment and keywords are appended to data
 +++
-### Generates Word Cloud from text
+### 2. Generates Word Cloud from text
 
 <img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
 
@@ -30,7 +30,7 @@ What is professional excellence ?
 
 
 +++
-### Generates Pie charts illustrating sentiment of data
+### 3. Generates Pie charts illustrating sentiment of data
 ![Sentiment Pie Chart](/images/piechart.png)
 
 ---
