@@ -19,6 +19,8 @@ Screen shot of input data
 ---
 ## What this application can do ?
 +++
+### generates a excel file which is similar to provided excel file but sentiment and keywords are appended to data
++++
 ### Generates Word Cloud from text
 
 <img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
