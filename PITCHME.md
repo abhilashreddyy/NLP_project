@@ -95,7 +95,7 @@ Do not have this features | takes 7-8 + no-of-questions minutes for topic detect
 +++
 google | azure
 -------|-------
-best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers good for saperate analysis for each answer)
+best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers)
 entity recognition | do not contain this feature
 
 
