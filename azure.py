@@ -15,7 +15,7 @@ import configparser
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
-#from PyDictionary import PyDictionary
+
 
 
 def find_dimensions(wb,sheets,header_rows = 3,header_columns = 2):
@@ -179,6 +179,9 @@ def call_url(url,text_data,key,i):
 def send_nlp_request_azure(url,text_data,key):
     async_res,res_info,temp_data = [],[],[]
     sentiment,keywords = [[]] * len(text_data),[[]] * len(text_data)
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    size_of_file = int(config['azure_params']['size_of_file'])
     try:
         for i in range(len(text_data)) :
             length = len(text_data[i]['documents'])
@@ -187,7 +190,7 @@ def send_nlp_request_azure(url,text_data,key):
 
             for j in range(len(text_data[i]['documents'])):
                 temp_data['documents'].append(text_data[i]['documents'][j])
-                if (sys.getsizeof(temp_data['documents']) > 50000) or (length-1 == j) :
+                if (sys.getsizeof(temp_data['documents']) > size_of_file) or (length-1 == j) :
                     async_res.append(call_url(url[0],json.dumps(temp_data),key,i))
                     async_res.append(call_url(url[1],json.dumps(temp_data),key,i))
                     temp_data = {}
@@ -237,7 +240,7 @@ def send_grouping_azure_req(text_data,url,key) :
         res_data.append([])
 
 
-    resp_url = []
+    #resp_url = []
     no_of_questons = len(text_data)
     for i in range(len(text_data)) :
         length = len(text_data[i])
@@ -257,7 +260,8 @@ def send_grouping_azure_req(text_data,url,key) :
                 temp_data['stopWords'] += ['professional','Wipro', 'excellence']
                 temp_data['stopPhrases'] += ['professional excellence']
                 resp = requests.post(url, data = json.dumps(temp_data).encode('utf-8'), headers = {'Ocp-Apim-Subscription-Key': key, 'Content-Type':'application/json'}, params = {'numberOfLanguagesToDetect':'1'})
-                #print(resp.headers)
+                print(resp.headers)
+                time.sleep(61)
                 resp = resp.headers['operation-location']
                 res_url[i] += [resp]
                 temp_data = {}
@@ -282,7 +286,7 @@ def send_grouping_azure_req(text_data,url,key) :
             else :
                 flag += 1
 
-        print("no of completed processes of ", no_of_processes , " are : ", no_of_processes-flag)
+        print(no_of_processes-flag ,"Requests completed out of ", no_of_processes)
         if (flag != 0):
             time.sleep(60)
         else:
@@ -396,7 +400,6 @@ def question_related_keys_extraction(keywords_info,question,gradient,treshold) :
     return question_wordcloud,extra_keys
 
 #--------------------------------------------------ectracting most relevant answers-----------------------------------------
-
 def extract_most_relevant(data,keywords) :
     req = []
     ps = PorterStemmer()
@@ -407,7 +410,7 @@ def extract_most_relevant(data,keywords) :
             if data[j][i] != None :
                 lst.append([nltk.pos_tag(word_tokenize(data[j][i])),i])
             else :
-                lst.append([[('asgd','NN')],i])
+                lst.append([('none','NN'),i])
 
         for i,rev in enumerate(lst) :
             dt_tags = [t for t in rev[0] if t[1] == "VB" or t[1] == 'NN' or t[1] == 'NNP' or t[1] == 'VBG' or t[1] == 'VBP' or t[1] == 'VBZ']
@@ -415,58 +418,39 @@ def extract_most_relevant(data,keywords) :
 
         for i,rev in enumerate(lst) :
             for k,val in enumerate(rev[0]) :
-                lst[i][0][k] = list(lst[i][0][k])
+                temp = wordnet.synsets(lst[i][0][k][0])
+                if temp != [] :
+                    lst[i][0][k] = list(lst[i][0][k])
                 #lst[i][0][k][0] = ps.stem(lst[i][0][k][0])
-                q = wordnet.synsets(lst[i][0][k][0])
-                if q != [] :
-                    lst[i][0][k][0] = q[0]
-                else :
-                    del lst[i][0][k]
-                    #lst[i][0][k][0] = "i"
-                #lst[i][0][k] = tuple(lst[i][0][k])
 
+                    lst[i][0][k][0] = temp
+                    lst[i][0][k] = tuple(lst[i][0][k])
+                else :
+                    lst[i][0].pop(j)
         #lst = [ps.stem(word[0]) for word in lst]
 
-        #search = ['horror','fear','conjuring']
+        stems = [ps.stem(word) for word in keywords[j]]
         synonyms = []
         for word in keywords[j] :
             for syn in wordnet.synsets(word):
                 for l in syn.lemmas():
-                    synonyms.append(wordnet.synsets(l.name())[0])
-                    print(wordnet.synsets(l.name())[0])
-        for k,word in enumerate(keywords[j]) :
-            keywords[j][k] = wordnet.synsets(word)[0]
+                    synonyms.append(l.name())
 
-        #print(synonyms,'\n',keywords[j],'\n')
-        #synonyms = [ps.stem(word) for word in synonyms]
+        #print(synonyms,'\n',stems,'\n',keywords[j],'\n')
+        synonyms = [ps.stem(word) for word in synonyms]
         for i,review in enumerate(lst) :
-
             score = 0
-            #temp1 = word[0].wup_similarity(keywords[j][k])
             for k,words in enumerate(review[0]) :
-                temp = 0
-                syn = 0
-                #if words[0] != "i" :
-                print("*",words[0])
-                for key in keywords[j] :
-                    temp1 = key.wup_similarity(words[0])
-                    if temp1 != None and temp1 > temp :
-                        temp = temp1
-                for key in synonyms :
-                    temp1 = key.wup_similarity(words[0])
-                    if temp1 != None and temp1 > temp :
-                        temp = temp1
-                        syn = 1
-                if syn == 1 :
-                    score += temp*.75
-                else :
-                    score += temp
-
-
-            if len(lst[i][0]) != 0 :
-                score /= len(lst[i][0])
-            else :
-                score = 0
+                if words[0] in keywords[j] :
+                    score += 100
+                elif words[0] in stems :
+                    score += 90
+                elif words[0] in synonyms :
+                    score += 65
+            #if len(lst[i][0]) != 0 :
+                #score /= len(lst[i][0])
+            #else :
+                #score = 0
             lst[i].append(score)
             req[j].append((score,i))
 

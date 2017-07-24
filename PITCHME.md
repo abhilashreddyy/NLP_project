@@ -12,6 +12,10 @@
 * Time consuming to read all the text and come to a conclusion
 * This application gives better intution over data in less time
 * Uses azure and google NLP cloud services
+
++++
+Screen shot of input data
+![Sentiment Pie Chart](/images/data.png)
 ---
 ## What this application can do ?
 +++
@@ -28,7 +32,14 @@ What is professional excellence ?
 ![Sentiment Pie Chart](/images/piechart.png)
 
 ---
-### What this application uses in azure services ?
+### Objectives
+* Sentiment analysis
+* Key-words extraction
+* Topic detection
+* extract most relevant answers for given keywords
+
+---
+### Objectives achieved with azure services
 * Uses azure *sentiment analysis*(piechart)
 * Uses azure key word detection for *extracting keywords*(word cloud)
 * Uses azure *topic detection* for generating topic of each sentence (word cloud)
@@ -54,19 +65,34 @@ WC generated from keywords related to question
 ![Sentiment Pie Chart](/images/wordcloud.png)
 
 ---
-### What this application uses in google cloud services ?
+### Objectives achieved with google services
 * Uses google *sentiment analysis*
 * Uses google *syntax analysis*
   * Returns every word saperately tagged with
     * parts of speech (tag,mood,tense etc.)
     * dependency edge of syntax tree
     * lemma of each word
-* Google NLP service als have *entity analysis* which extracts *common nouns* from text
+    * Selected parts of speech(noun,verb) are used for extracting keywords  
+* Google NLP service also have *entity analysis* which extracts *common nouns* from text
 +++
 
 ### WC generated from google cloud data
 
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
+
+---
+### comparison of google andd azure services
+
+google | azure
+-------|-------
+Returns a dictionary object | returns a json formatted string
+takes 2.5to2.6 seconds for performing sentiment and keyword analysis | takes  seconds for performing sentiment and keyword
+Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
+best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers good for saperate analysis for each answer)
+entity recognition | do not contain this feature
+
+
+
 
 ---
 ### Why this application written in python ?
@@ -132,4 +158,4 @@ WC generated from keywords related to question
 ## Future scope
 * If integrated with online google or microsoft excel sheets
   * Can directly analyse online discussion forums
-* Can add a function for gathering most relevant reviews or answers for given keywords 
+* Can add a function for gathering most relevant reviews or answers for given keywords
