@@ -92,6 +92,9 @@ google | azure
 Returns a dictionary object | returns a json formatted string
 takes 2.5to2.6 seconds for performing sentiment and keyword analysis | takes  seconds for performing sentiment and keyword
 Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
++++
+google | azure
+-------|-------
 best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers good for saperate analysis for each answer)
 entity recognition | do not contain this feature
 
