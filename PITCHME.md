@@ -191,6 +191,7 @@ What is professional excellence ?
      ]
  }
 ```
++++
 * Key phrases Extraction
 ```
 {
@@ -208,7 +209,12 @@ What is professional excellence ?
  }
 ```
 +++
-* Topic detection
+### Topic Detection
+* Send request to azure services
+* Responds with an URL representing the location where computation of topic detection is performed
+* Send get request to URL
+* Responds with detected Topics 
++++
 <table>
   <tbody>
     <tr>
