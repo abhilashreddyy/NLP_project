@@ -40,7 +40,7 @@ What is professional excellence ?
 ### 5. Generates a csv file ralted to most relevant answers for a set of keywords
 ---
 ### Snap shot of the project
-![Sentiment Pie Chart](/images/project_screen_shot.png)
+![Projct Snapshot](/images/project_screen_shot.png)
 
 
 +++
