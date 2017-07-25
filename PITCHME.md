@@ -43,6 +43,10 @@ What is professional excellence ?
 * extract most relevant answers for given keywords
 
 ---
+* Request cloud services for sentimet of each response for a survey and append sentiment to respective response in excel filename
+* Topics detected from given text corpus are used to generate word cloud
+* Keywords extracted are used for generating word cloud and extracting most relevant answers
+---
 ### Objectives achieved with azure services
 * Uses azure *sentiment analysis*(piechart)
 * Uses azure key word detection for *extracting keywords*(word cloud)
@@ -57,15 +61,15 @@ What is professional excellence ?
 * Extracting keywords related to question take 6 to 7 seconds of compilation
 
 +++
-WC generated from topics
+Word Cloud generated from topics
 ![Sentiment Pie Chart](images/topicwise.png)
 +++
 
-WC generated from keys
+Word Cloud generated from keys
 ![Sentiment Pie Chart](/images/keywordwise1.png)
 +++
 
-WC generated from keywords related to question
+Word Cloud generated from keywords related to question
 ![Sentiment Pie Chart](/images/wordcloud.png)
 
 ---
@@ -80,7 +84,7 @@ WC generated from keywords related to question
 * Google NLP service also have *entity analysis* which extracts *common nouns* from text
 +++
 
-### WC generated from google cloud data
+### Word Cloud generated from google cloud data
 
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
 
@@ -102,13 +106,6 @@ entity recognition | do not contain this feature
 
 
 ---
-### Why this application written in python ?
-* as the code is written in python
-  * It have good scope for furthur development
-  * Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
-  * Very easy to use on integrating this application with google docs or microsoft online excel sheets
-
-+++
 
 ### Asynchronous nature of code
 * (best ans most intresting part of application)
@@ -116,12 +113,35 @@ entity recognition | do not contain this feature
   * as a result it **took 30 seconds** for each time compile and run
 * Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
++++
+
+![sync request](/images/sync.jpg)
+
++++
+
+![asynchronous python explanation](/images/async_explanation.jpg)
+
++++
+
+![async request](/images/async.jpg)
 
 ---
 # Design of Application
++++
+###Pseudo Code
+1 . Reading from excel file .
+  * Initally checking dimensions of file .
+  * read entire file column wise .
+2 . Send async request to cloud services .
+3 . Generate Word cloud .
+  * Uisng keywords
+4 . Generate piechart .
+  * count positive negative and neutral sentences
+  * project them on piechart
+5 . Write sentimet and keyword info to excel file .
+6 .
 ---
-
-###reading from file
+###Reading from file
 * decides no of columns by considering no of headings
 * decides no of rows by considering no of numbers in first column
 * returns 2d list of strings and dimensions of each sheet and name of sheets in workbook(excel file)
@@ -158,11 +178,12 @@ entity recognition | do not contain this feature
 ### Remaining processing
 * Same thing done with topic detection
   * but a little complicated(code)
-* Then extrcated related keywords in answers from given keys
+* Extracted most similar keys in answers from a set of initally provided keys
 * Same thing done with google API with some changes in format of input and output
 
 ---
 ## Future scope
-* If integrated with online google or microsoft excel sheets
+* If integrated with Google or Office 365 online forums
   * Can directly analyse online discussion forums
 * Can add a function for gathering most relevant reviews or answers for given keywords
+* Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
