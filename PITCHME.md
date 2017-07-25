@@ -141,7 +141,7 @@ What is professional excellence ?
       },
       "partOfSpeech": {
         "tag": "VERB",
-        "mood": "INDICATIVE",
+        "mood": "INDICATIVE",                                
         "number": "SINGULAR",
         "person": "THIRD",
         "tense": "PRESENT",
@@ -156,14 +156,14 @@ What is professional excellence ?
 ---
 ## Features of Azure NLP
 +++
-* Input for azure services
+* Input to azure services
 ```
 {
      "documents": [
          {
              "language": "en",
              "id": "1",
-             "text": "First document"
+             "text": "First document"                                     
          },
          ...
          {
@@ -181,12 +181,12 @@ What is professional excellence ?
        "documents": [
          {
              "id": "1",
-             "score": "0.934"
+             "score": "0.934"             
          },
          ...
          {
              "id": "100",
-             "score": "0.002"
+             "score": "0.002"                          
          },
      ]
  }
