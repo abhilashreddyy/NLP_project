@@ -102,8 +102,8 @@ What is professional excellence ?
 </table>
 +++
 * Entity analysis
-'''
-{
+```json
+  {
   "entities": [
     {
       "name": "Lawrence of Arabia",
@@ -130,10 +130,10 @@ What is professional excellence ?
         }
       ]
     },
-'''
+```
 +++
 * Syntax Analysis
-'''
+```json
 "tokens": [
     {
       "text": {
@@ -149,7 +149,7 @@ What is professional excellence ?
       },
       "lemma": "The"
     },
-'''
+```
 ---
 ## Features of Azure NLP
 
