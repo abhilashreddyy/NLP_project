@@ -115,15 +115,15 @@ entity recognition | do not contain this feature
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 +++
 
-<img src="/images/sync.jpg" alt="Sync Request" style="width: 50px; height: 50"/>
+<img src="/images/sync.jpg" alt="Sync Request" style="width: 400px; height: 250"/>
 
 +++
 
-![asynchronous python explanation](/images/async_explanation.jpg =50x50)
+<img src="/images/async_explanation.jpg" alt="Sync Request" style="width: 400px; height: 300"/>
 
 +++
 
-![async request](/images/async.jpg =50x50)
+<img src="/images/async.jpg" alt="Sync Request" style="width: 400px; height: 250"/>
 
 ---
 # Design of Application
