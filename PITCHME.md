@@ -129,17 +129,17 @@ entity recognition | do not contain this feature
 # Design of Application
 +++
 ###Pseudo Code
-1 . Reading from excel file .
+* Reading from excel file .
   * Initally checking dimensions of file .
   * read entire file column wise .
-2 . Send async request to cloud services .
-3 . Generate Word cloud .
+* Send async request to cloud services .
+* Generate Word cloud .
   * Uisng keywords
-4 . Generate piechart .
+* Generate piechart .
   * count positive negative and neutral sentences
   * project them on piechart
-5 . Write sentimet and keyword info to excel file .
-6 .
+* Write sentimet and keyword info to excel file .
+* 
 ---
 ###Reading from file
 * decides no of columns by considering no of headings
