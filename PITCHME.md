@@ -63,10 +63,12 @@ What is professional excellence ?
 ---
 ### Features of Google NLP
 * Sentiment Analysis
-Input|Output
------|------
-{
-  "encodingType": "UTF8",<br></br>  "document": {<br></br>    "type": "PLAIN_TEXT",<br></br>    "content": "Enjoy your vacation!"<br></br>  }<br></br>} | {<br></br>  "documentSentiment": {<br></br>    "magnitude": 0.8,<br></br>    "score": 0.8<br></br>  },<br></br>  "language": "en",<br></br>  "sentences": [<br></br>    {      "text": {<br></br>        "content": "Enjoy your vacation!",<br></br>        "beginOffset": 0<br></br>      },<br></br>      "sentiment": {<br></br>        "magnitude": 0.8,<br></br>        "score": 0.8<br></br>      }<br></br>    }<br></br>  ]<br></br>}
++---------------------------------+------------------------------------+
+|	   Input	                       |	        Output		                   |
++=================================+====================================+
+|  asdasda                        |                                    |
+|   asasdasas                     |                                    | 
++---------------------------------+------------------------------------+
 
 
 ---
