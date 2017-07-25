@@ -56,7 +56,7 @@ def read_questions() :
 
     return questions,dimensions[max_questions][1],dimensions,sheets
 
-def output_exel(info,max_questions,dimensions,sheets,_type):
+def output_exel(info,max_questions,dimensions,sheets,_type,thread_message):
     config = configparser.ConfigParser()
     config.read('config.ini')
     input_file = config['excel_sheet_params']['filename']
@@ -102,7 +102,7 @@ def output_exel(info,max_questions,dimensions,sheets,_type):
 
     wb.save(output_file_name)
 
-def output_exel_with_question(info,max_questions,dimensions,sheets,_type):
+def output_exel_with_question(info,max_questions,dimensions,sheets,_type,thread_message):
     config = configparser.ConfigParser()
     config.read('config.ini')
     input_file = config['excel_sheet_params']['filename']
@@ -139,16 +139,18 @@ def output_exel_with_question(info,max_questions,dimensions,sheets,_type):
     wb.save(output_file_name)
 
 
-def generate_word_cloud(sol,filename) :
+def generate_word_cloud(sol,filename,thread_message,eligible_qts = []) :
+    if eligible_qts == [] :
+        eligible_qts = [i for i in range(len(sol))]
     for i in range(len(sol)):
         wordcloud = WordCloud().generate(sol[i])
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis("off")
         plt.title('Word Cloud of Question '+ str(i+1), fontsize=14, fontweight='bold')
-        plt.savefig(filename + str(i+1) +".png")
+        plt.savefig(filename + str(eligible_qts[i]+1) +".png")
         plt.gcf().clear()
 
-def generate_piechart_for_azure_sentiment(sentiment) :
+def generate_piechart_for_azure_sentiment(sentiment,thread_message) :
     for i in range(len(sentiment)) :
         a = [0,0,0]
         for sent in sentiment[i] :
@@ -170,13 +172,13 @@ def generate_piechart_for_azure_sentiment(sentiment) :
 
 #------------------------------file operations ends here -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 @asyncio.coroutine
-def call_url(url,text_data,key,i):
+def call_url(url,text_data,key,i,thread_message):
     response = yield from aiohttp.ClientSession().post(url, data = text_data.encode('utf-8'), headers = {'Ocp-Apim-Subscription-Key': key, 'Content-Type':'application/json'}, params = {'numberOfLanguagesToDetect':'1'})
     response = yield from response.json()
     return [response,url,i]
 
 
-def send_nlp_request_azure(url,text_data,key):
+def send_nlp_request_azure(url,text_data,key,thread_message):
     async_res,res_info,temp_data = [],[],[]
     sentiment,keywords = [[]] * len(text_data),[[]] * len(text_data)
     config = configparser.ConfigParser()
@@ -191,8 +193,8 @@ def send_nlp_request_azure(url,text_data,key):
             for j in range(len(text_data[i]['documents'])):
                 temp_data['documents'].append(text_data[i]['documents'][j])
                 if (sys.getsizeof(temp_data['documents']) > size_of_file) or (length-1 == j) :
-                    async_res.append(call_url(url[0],json.dumps(temp_data),key,i))
-                    async_res.append(call_url(url[1],json.dumps(temp_data),key,i))
+                    async_res.append(call_url(url[0],json.dumps(temp_data),key,i,thread_message))
+                    async_res.append(call_url(url[1],json.dumps(temp_data),key,i,thread_message))
                     temp_data = {}
                     temp_data['documents'] = []
 
@@ -209,13 +211,13 @@ def send_nlp_request_azure(url,text_data,key):
                 keywords[val[2]] = keywords[val[2]] + val[0]['documents']
 
     except requests.exceptions.Timeout as e:
-        print(e)
+        print(thread_message,e)
         sys.exit(1)
     except requests.exceptions.TooManyRedirects as e:
-        print(e)
+        print(thread_message,e)
         sys.exit(1)
     except requests.exceptions.RequestException as e:
-        print(e)
+        print(thread_message,e)
         sys.exit(1)
 
     return sentiment,keywords
@@ -224,13 +226,13 @@ def send_nlp_request_azure(url,text_data,key):
 #--------------------------------sentiment&keyword extraction functions end here----------------------------------------------------------------------------------------------------------------------
 
 @asyncio.coroutine
-def call_topic_url(url,header,i,j):
+def call_topic_url(url,header,i,j,thread_message):
     response = yield from aiohttp.ClientSession().get(url, headers = header, params = {'numberOfLanguagesToDetect':'1'})
     response = yield from response.json()
     return [response,i,j]
 
 
-def send_grouping_azure_req(text_data,url,key) :
+def send_grouping_azure_req(text_data,url,key,thread_message) :
 
     async_res,async_req = [],[]
     res_url,res_data = [],[]
@@ -242,6 +244,7 @@ def send_grouping_azure_req(text_data,url,key) :
 
     #resp_url = []
     no_of_questons = len(text_data)
+    print(len(text_data))
     for i in range(len(text_data)) :
         length = len(text_data[i])
 
@@ -259,8 +262,10 @@ def send_grouping_azure_req(text_data,url,key) :
                 no_of_processes += 1
                 temp_data['stopWords'] += ['professional','Wipro', 'excellence']
                 temp_data['stopPhrases'] += ['professional excellence']
+                print('sent request : ', no_of_processes )
                 resp = requests.post(url, data = json.dumps(temp_data).encode('utf-8'), headers = {'Ocp-Apim-Subscription-Key': key, 'Content-Type':'application/json'}, params = {'numberOfLanguagesToDetect':'1'})
-                print(resp.headers)
+                #print(thread_message,resp.headers)
+                print("got a response URL : ", no_of_processes)
                 time.sleep(61)
                 resp = resp.headers['operation-location']
                 res_url[i] += [resp]
@@ -276,7 +281,7 @@ def send_grouping_azure_req(text_data,url,key) :
 
     not_ready = True
     while not_ready:
-        proc_stat = get_operation_stat(res_url,key)
+        proc_stat = get_operation_stat(res_url,key,thread_message)
         flag = 0
         completed_processes = 0
         for i in proc_stat :
@@ -286,21 +291,21 @@ def send_grouping_azure_req(text_data,url,key) :
             else :
                 flag += 1
 
-        print(no_of_processes-flag ,"Requests completed out of ", no_of_processes)
+        print(thread_message," : ",no_of_processes-flag ,"Requests completed out of ", no_of_processes)
         if (flag != 0):
             time.sleep(60)
         else:
             not_ready = False
 
 
-    #print(res_data)
+    #print(thread_message," : ",res_data)
     return res_data
-    #print(res_asignment)
+    #print(thread_message," : ",res_asignment)
 
 
 
 
-def get_operation_stat(stat_url,api_key):
+def get_operation_stat(stat_url,api_key,thread_message):
 
     process_status,async_res,response = [],[],[]
     header = {'Ocp-Apim-Subscription-Key':api_key, \
@@ -309,7 +314,7 @@ def get_operation_stat(stat_url,api_key):
     for i in range(len(stat_url)) :
         for j in range(len(stat_url[i])) :
             if stat_url[i][j] != 'completed' :
-                async_res.append(call_topic_url(stat_url[i][j],header,i,j))
+                async_res.append(call_topic_url(stat_url[i][j],header,i,j,thread_message))
 
     loop = asyncio.get_event_loop()
     response.append(loop.run_until_complete(asyncio.wait(async_res)))
@@ -325,11 +330,11 @@ def get_operation_stat(stat_url,api_key):
 
 
 #-------------------------------grouping topics starts here ------------------------------------------------------------------------------------------------------------------------------------------
-def azure_error_message(res_info):
-    print ('Inner Erro Message : ' + res_info['innerError']['message'])
-    print ('Inner Erro Code : ' + res_info['innerError']['code'])
-    print ('Over All Erro Message : ' + res_info['message'])
-    print ('Over All Error Message : ' + res_info['code'])
+def azure_error_message(res_info,thread_message):
+    print (thread_message," : ",'Inner Erro Message : ' + res_info['innerError']['message'])
+    print (thread_message," : ",'Inner Erro Code : ' + res_info['innerError']['code'])
+    print (thread_message," : ",'Over All Erro Message : ' + res_info['message'])
+    print (thread_message," : ",'Over All Error Message : ' + res_info['code'])
     sys.exit(1)
 
 
@@ -337,7 +342,7 @@ def azure_error_message(res_info):
 
 
 #----------------------------------code for including keywords in question ----------------------------------------------------------------------------------------------------------------------------------------
-def question_related_keys_extraction(keywords_info,question,gradient,treshold) :
+def question_related_keys_extraction(keywords_info,question,gradient,treshold,thread_message) :
     question_rel,answer,q_len,question_wordcloud,a_len,extra_keys = [],[],[],[],[],[]
 
 
@@ -400,7 +405,7 @@ def question_related_keys_extraction(keywords_info,question,gradient,treshold) :
     return question_wordcloud,extra_keys
 
 #--------------------------------------------------ectracting most relevant answers-----------------------------------------
-def extract_most_relevant(data,keywords) :
+def extract_most_relevant(data,keywords,thread_message) :
     req = []
     ps = PorterStemmer()
     for j in range(len(data)):
@@ -458,7 +463,7 @@ def extract_most_relevant(data,keywords) :
 
     return req
 
-def write_to_file(most_rel,data) :
+def write_to_file(most_rel,data,thread_message) :
 
     try:
         os.remove('most_relevant_answers.csv')

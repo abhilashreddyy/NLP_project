@@ -4,8 +4,9 @@ import json
 import configparser
 import os
 import time
+from _thread import start_new_thread
 
-def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
+def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,thread_message):
 
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -15,7 +16,6 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
     sentiment_serviceurl = config['azure_params']['sentiment_serviceurl']
     keywords_serviceurl = config['azure_params']['keywords_serviceurl']
     count = 0
-    print('reached')
 
     for i in range(max_questions) :
         no_of_sol.append(len(data[i]))
@@ -38,9 +38,9 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
 
         jsontext.append(json_data)
     tim = time.time()
-    sentiment_info,keywords_info = azure.send_nlp_request_azure([sentiment_serviceurl,keywords_serviceurl],jsontext,key)
+    sentiment_info,keywords_info = azure.send_nlp_request_azure([sentiment_serviceurl,keywords_serviceurl],jsontext,key,thread_message)
     tim = time.time()-tim
-    print('time taken for keyword and sentimet analysis : ' + str(tim))
+    print(thread_message + ' : time taken for keyword and sentimet analysis : ' + str(tim))
     temp = empty_cells[:]
     for i in range(len(sentiment_info)) :
         for j in range(len(sentiment_info[i])) :
@@ -53,9 +53,9 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
 
 
 
-    azure.output_exel_with_question(sentiment_info,max_questions,dimensions,sheets,"sentiment")
-    azure.output_exel_with_question(keywords_info,max_questions,dimensions,sheets,"keyword")
-    azure.generate_piechart_for_azure_sentiment(sentiment_info)
+    azure.output_exel_with_question(sentiment_info,max_questions,dimensions,sheets,"sentiment",thread_message)
+    azure.output_exel_with_question(keywords_info,max_questions,dimensions,sheets,"keyword",thread_message)
+    azure.generate_piechart_for_azure_sentiment(sentiment_info,thread_message)
 
     for word in keywords_info :
         string = ''
@@ -64,13 +64,13 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
                 string = string + word2 + " "
         wordcloud_text.append(string)
 
-    azure.generate_word_cloud(wordcloud_text,"keywordwise")
+    azure.generate_word_cloud(wordcloud_text,"keywordwise",thread_message)
 
     value = ['environment','technical','security','passion','intelligence','customer','satisfaction']
 
 
-    gradient = 3
-    treshold = .5
+    gradient = int(config['related_word_extraction_params']['gradient'])
+    treshold = float(config['related_word_extraction_params']['treshold'])
     simplified_keywords_info = []
     question = [['environment','technical','security','passion','intelligence','customer','satisfaction'],['environment','technical','security','passion','intelligence','customer','satisfaction'],['environment','technical','security','passion','intelligence','customer','satisfaction'],['environment','technical','security','passion','intelligence','customer','satisfaction']]
     for i,word1 in enumerate(keywords_info) :
@@ -78,14 +78,13 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
         for word2 in word1:
             for word3 in word2['keyPhrases'] :
                 simplified_keywords_info[i].append(word3)
+    print
+    q_wordcloud,extra_keys = azure.question_related_keys_extraction(simplified_keywords_info,question,gradient,treshold,thread_message)
+
+    azure.generate_word_cloud(q_wordcloud,"including_question",thread_message)
 
 
-    q_wordcloud,extra_keys = azure.question_related_keys_extraction(simplified_keywords_info,question,gradient,treshold)
-
-    azure.generate_word_cloud(q_wordcloud,"including_question")
-
-
-def grouping_topic(data,max_questions) :
+def grouping_topic(data,max_questions,thread_message) :
     config = configparser.ConfigParser()
     question_nos = []
     config.read('config.ini')
@@ -96,30 +95,37 @@ def grouping_topic(data,max_questions) :
     for i,question in enumerate(data) :
         if len(question) > 100 :
             question_nos.append(i)
+        else :
+            print("cannot send question " ,i+1, " for analysis due to insufficent data")
 
-    response = azure.send_grouping_azure_req([data[no] for no in question_nos],topicgrouping_serviceurl,key)
+    response = azure.send_grouping_azure_req([data[no] for no in question_nos],topicgrouping_serviceurl,key,thread_message)
     for i in response :
         string = ''
         for j in i :
             string = string + j['keyPhrase'] + " "
         wordcloud_text.append(string)
 
-    azure.generate_word_cloud(wordcloud_text,"topicwise")
+    azure.generate_word_cloud(wordcloud_text,"topicwise",thread_message,eligible_qts = question_nos)
 
 
-def most_rel(data,value) :
-    most_rel = azure.extract_most_relevant(data,value)
-    azure.write_to_file(most_rel,data)
+def most_rel(data,value,thread_message) :
+    most_rel = azure.extract_most_relevant(data,value,thread_message)
+    azure.write_to_file(most_rel,data,thread_message)
 
 
 def route_function() :
     data,max_questions,dimensions,sheets = azure.read_questions()
     value = [['environment','technical','security','passion','intelligence','customer','satisfaction'],['friendly','together','understanding','attitude'],['resource','time'],['clear','understanding','undertaking','review']]
-    most_rel(data,value)
-    analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets)
-    print("grouping_topic")
-    grouping_topic(data,max_questions)
+    #try :
+        #start_new_thread(most_rel,(data,value,"azure_most_rel_thread",))
+        #start_new_thread(analysis_sentiment_and_keyword,(data,max_questions,dimensions,sheets,"azure_sentiment&keyword_thread",))
+        #start_new_thread(grouping_topic,(data,max_questions,"azure_grouping_topic_thread",))
+    most_rel(data,value,"azure_most_rel_thread")
+    analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,"azure_sentiment&keyword_thread")
+    grouping_topic(data,max_questions,"azure_grouping_topic_thread")
 
+    #except :
+    #    print('unable to start thread !!!')
 
 if __name__ == '__main__' :
     try:
