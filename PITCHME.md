@@ -61,7 +61,8 @@ What is professional excellence ?
 * Evaluate the feasibility of not using local version (e.g) Spacy / Stanford NLP
 * Evaluate the possibility of offering this as a service for Office 365 Forms
 ---
-### Features of Google NLP
+## Features of Google NLP
++++
 * Sentiment Analysis
 <table>
   <tbody>
