@@ -5,10 +5,11 @@
 ---
 ## What is this application about ?
 +++
-* Organizations typically conduct a lot of surverys . To minimize the amount of works Surveys are of the form that get the users to chosse a number as an answer so that it can be easily processed. But a lot of qualitative / behavioural surveys also need to be conducted in an organization and expect the users to type in answers . 
+* Organizations typically conduct a lot of surverys . To minimize the amount of works Surveys are of the form that get the users to chosse a number as an answer so that it can be easily processed. But a lot of qualitative / behavioural surveys also need to be conducted in an organization and expect the users to type in answers .
   * Questions and Answers are collated as excel files since they are easier to process
   * Each sheet typically consists of questions (as columns ) and answers by multiple people (as rows )
   * Multiple surveys are stored as  sheets
++++
 * Time consuming to read all the text and come to a conclusion
 * This application attempts to provide a better intution /summary of the answers at a glance.
 * Uses azure and google NLP cloud services
@@ -19,11 +20,11 @@ Screen shot of input data
 ---
 ## What this application does ?
 +++
-### 1. Detects Sentiment of an answer . Appends a column to the Excel sheet with sentiment 
+### 1. Detects Sentiment of an answer . Appends a column to the Excel sheet with sentiment
 
 ### 2. Detects the keywords  of an answers and adds a column to the Excel sheet with the keyword
 +++
-### 3. Generates a Word Cloud of Keywords for each question ( based on the keyword and Topic ) 
+### 3. Generates a Word Cloud of Keywords for each question ( based on the keyword and Topic )
 
 <img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
 
@@ -39,28 +40,39 @@ What is professional excellence ?
 ### 5. Generates a csv file ralted to most relevant answers for a set of keywords
 ---
 ### Snap shot of the project
+![Sentiment Pie Chart](/images/project_screen_shot.png)
 
-####  Duration  
-* 8 weeks
 
-#### Number of people
-* 1
++++
+* Duration  
+  * 8 weeks
 
-#### Functional Objectives
+* Number of people
+  * 1
+---
+### Functional Objectives
 * Sentiment analysis
 * Key-words extraction
 * Topic detection
 * Extract most relevant answers for given keywords ( by using the data of the question )
-
-#### Other Objectives
++++
+### Other Objectives
 * Provide a test bed to evaluate the Google Cloud NLP and Azure NLP Cloud Services
 * Evaluate the feasibility of not using local version (e.g) Spacy / Stanford NLP
 * Evaluate the possibility of offering this as a service for Office 365 Forms
+---
+### Features of Google NLP
+* Sentiment Analysis
+Input|Output
+-----|------
+{
+  "encodingType": "UTF8",<br>  "document": {<br>    "type": "PLAIN_TEXT",<br>    "content": "Enjoy your vacation!"<br>  }<br>} | {<br>  "documentSentiment": {<br>    "magnitude": 0.8,<br>    "score": 0.8<br>  },<br>  "language": "en",<br>  "sentences": [<br>    {      "text": {<br>        "content": "Enjoy your vacation!",<br>        "beginOffset": 0<br>      },<br>      "sentiment": {<br>        "magnitude": 0.8,<br>        "score": 0.8<br>      }<br>    }<br>  ]<br>}
 
-## Features of Google NLP
 
 ---
 ## Features of Azure NLP
+
+
 ---
 
 * Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel filename
@@ -109,11 +121,11 @@ Word Cloud generated from keywords related to question
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
 
 ---
-### comparison of google andd azure services
+### comparison of google and azure services
 
 google | azure
 -------|-------
-Returns a dictionary object | returns a json formatted string
+Returns a dictionary object | returns a json formated string
 takes 2.5-2.6 seconds for performing sentiment and keyword analysis | takes 2.2-2.3 seconds for performing sentiment and keyword analysis
 Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
 +++
@@ -159,7 +171,7 @@ entity recognition | do not contain this feature
   * count positive negative and neutral sentences
   * project them on piechart
 * Write sentimet and keyword info to excel file .
-* 
+*
 ---
 ###Reading from file
 * decides no of columns by considering no of headings
