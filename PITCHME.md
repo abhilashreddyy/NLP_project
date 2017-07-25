@@ -115,15 +115,15 @@ entity recognition | do not contain this feature
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 +++
 
-<img src="/images/sync.jpg" alt="Sync Request" style="width: 1000px; height: 350;"/>
+<img src="/images/sync.jpg" alt="Sync Request" style="width: 800px; height: 350;"/>
 
 +++
 
-<img src="/images/async_explanation.jpg" alt="Sync Request" style="width: 500px; height: 600;"/>
+<img src="/images/async_explanation.jpg" alt="Sync Request" style="width: 450px; height: 600;"/>
 
 +++
 
-<img src="/images/async.jpg" alt="Sync Request" style="width: 500px; height: 350;"/>
+<img src="/images/async.jpg" alt="Sync Request" style="width: 800px; height: 350;"/>
 
 ---
 # Design of Application
