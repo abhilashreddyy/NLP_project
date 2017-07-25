@@ -5,23 +5,25 @@
 ---
 ## What is this application about ?
 +++
-* Surveys consists of large amount of text
-  * I this case we have an excel file
-  * File consists of sheets
-  * each file consists of questions and multiple answers by multiple people
+* Organizations typically conduct a lot of surverys . To minimize the amount of works Surveys are of the form that get the users to chosse a number as an answer so that it can be easily processed. But a lot of qualitative / behavioural surveys also need to be conducted in an organization and expect the users to type in answers . 
+  * Questions and Answers are collated as excel files since they are easier to process
+  * Each sheet typically consists of questions (as columns ) and answers by multiple people (as rows )
+  * Multiple surveys are stored as  sheets
 * Time consuming to read all the text and come to a conclusion
-* This application gives better intution over data in less time
+* This application attempts to provide a better intution /summary of the answers at a glance.
 * Uses azure and google NLP cloud services
 
 +++
 Screen shot of input data
 ![Sentiment Pie Chart](/images/data.png)
 ---
-## What this application can do ?
+## What this application does ?
 +++
-### 1. generates a excel file which is similar to provided excel file but sentiment and keywords are appended to data
+### 1. Detects Sentiment of an answer . Appends a column to the Excel sheet with sentiment 
+
+### 2. Detects the keywords  of an answers and adds a column to the Excel sheet with the keyword
 +++
-### 2. Generates Word Cloud from text
+### 3. Generates a Word Cloud of Keywords for each question ( based on the keyword and Topic ) 
 
 <img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
 
@@ -30,20 +32,38 @@ What is professional excellence ?
 
 
 +++
-### 3. Generates Pie charts illustrating sentiment of data
+### 4. Generates Pie charts illustrating sentiment of data
 ![Sentiment Pie Chart](/images/piechart.png)
 
 +++
-### 4. Generates a csv file ralted to most relevant answers for a set of keywords
+### 5. Generates a csv file ralted to most relevant answers for a set of keywords
 ---
-### Objectives
+### Snap shot of the project
+
+####  Duration  
+* 8 weeks
+
+#### Number of people
+* 1
+
+#### Functional Objectives
 * Sentiment analysis
 * Key-words extraction
 * Topic detection
-* extract most relevant answers for given keywords
+* Extract most relevant answers for given keywords ( by using the data of the question )
+
+#### Other Objectives
+* Provide a test bed to evaluate the Google Cloud NLP and Azure NLP Cloud Services
+* Evaluate the feasibility of not using local version (e.g) Spacy / Stanford NLP
+* Evaluate the possibility of offering this as a service for Office 365 Forms
+
+## Features of Google NLP
 
 ---
-* Request cloud services for sentimet of each response for a survey and append sentiment to respective response in excel filename
+## Features of Azure NLP
+---
+
+* Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel filename
 * Topics detected from given text corpus are used to generate word cloud
 * Keywords extracted are used for generating word cloud and extracting most relevant answers
 ---
