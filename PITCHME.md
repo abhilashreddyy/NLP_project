@@ -115,7 +115,7 @@ entity recognition | do not contain this feature
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 +++
 
-![sync request](/images/sync.jpg =50x50)
+<img src="/images/sync.jpg" alt="Sync Request" style="width: 50px; height: 50"/>
 
 +++
 
