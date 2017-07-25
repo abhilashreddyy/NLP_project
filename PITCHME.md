@@ -100,7 +100,56 @@ What is professional excellence ?
     </tr>
   </tbody>
 </table>
-
++++
+* Entity analysis
+'''
+{
+  "entities": [
+    {
+      "name": "Lawrence of Arabia",
+      "type": "WORK_OF_ART",
+      "metadata": {
+        "mid": "/m/0bx0l",
+        "wikipedia_url": "http://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)"
+      },
+      "salience": 0.75222147,
+      "mentions": [
+        {
+          "text": {
+            "content": "Lawrence of Arabia",
+            "beginOffset": 1
+          },
+          "type": "PROPER"
+        },
+        {
+          "text": {
+            "content": "film biography",
+            "beginOffset": 39
+          },
+          "type": "COMMON"
+        }
+      ]
+    },
+'''
++++
+* Syntax Analysis
+'''
+"tokens": [
+    {
+      "text": {
+        "content": "The",
+        "beginOffset": 4
+      },
+      "partOfSpeech": {
+        "tag": "DET",
+      },
+      "dependencyEdge": {
+        "headTokenIndex": 2,
+        "label": "DET"
+      },
+      "lemma": "The"
+    },
+'''
 ---
 ## Features of Azure NLP
 
