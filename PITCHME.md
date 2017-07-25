@@ -134,26 +134,127 @@ What is professional excellence ?
 +++
 * Syntax Analysis
 ```json
-"tokens": [
-    {
+   {
       "text": {
-        "content": "The",
-        "beginOffset": 4
+        "content": "is",
+        "beginOffset": 35
       },
       "partOfSpeech": {
-        "tag": "DET",
+        "tag": "VERB",
+        "mood": "INDICATIVE",
+        "number": "SINGULAR",
+        "person": "THIRD",
+        "tense": "PRESENT",
       },
       "dependencyEdge": {
-        "headTokenIndex": 2,
-        "label": "DET"
+        "headTokenIndex": 7,
+        "label": "ROOT"
       },
-      "lemma": "The"
+      "lemma": "be"
     },
 ```
 ---
 ## Features of Azure NLP
-
-
++++
+* Input for azure services
+```
+{
+     "documents": [
+         {
+             "language": "en",
+             "id": "1",
+             "text": "First document"
+         },
+         ...
+         {
+             "language": "en",
+             "id": "100",
+             "text": "Final document"
+         }
+     ]
+ }
+```
++++
+* Sentiment Analysis
+```
+{
+       "documents": [
+         {
+             "id": "1",
+             "score": "0.934"
+         },
+         ...
+         {
+             "id": "100",
+             "score": "0.002"
+         },
+     ]
+ }
+```
+* Key phrases Extraction
+```
+{
+       "documents": [
+         {
+             "id": "1",
+             "keyPhrases": ["key phrase 1", ..., "key phrase n"]
+         },
+         ...
+         {
+             "id": "100",
+             "keyPhrases": ["key phrase 1", ..., "key phrase n"]
+         },
+     ]
+ }
+```
++++
+* Topic detection
+<table>
+  <tbody>
+    <tr>
+      <th>Input</th>
+      <th>Output</th>
+    </tr>
+    <tr>
+      <td><pre>{
+     "documents": [
+         {
+             "id": "1",
+             "text": "First document"
+         },
+         ...
+         {
+             "id": "100",
+             "text": "Final document"
+         }
+     ],
+     "stopWords": [
+         "issue", "error", "user"
+     ],
+     "stopPhrases": [
+         "Microsoft", "Azure"
+     ]
+ }
+</pre></td>
+      <td><pre>{
+        "topics" : [{
+            "id" : "string",
+            "score" : "number",
+            "keyPhrase" : "string"
+        }],
+        "topicAssignments" : [{
+            "documentId" : "string",
+            "topicId" : "string",
+            "distance" : "number"
+        }],
+        "errors" : [{
+            "id" : "string",
+            "message" : "string"
+        }]
+    }</pre></td>
+    </tr>
+  </tbody>
+</table>
 ---
 
 * Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel filename
