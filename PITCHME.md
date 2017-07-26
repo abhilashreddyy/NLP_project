@@ -353,13 +353,16 @@ entity recognition | do not contain this feature
   * Initally checking dimensions of file .
   * read entire file column wise .
 * Send async request to cloud services .
+  * cloud services returns objects of sentiment,keywords,topics
 * Generate Word cloud .
-  * Uisng keywords
+  * Uisng keywords nad topic
 * Generate piechart .
-  * count positive negative and neutral sentences
+  * count positive negative and neutral sentences 
   * project them on piechart
-* Write sentimet and keyword info to excel file .
-*
++++
+* appends sentimet and keyword info to excel file .
+* create a csv file with most relevant sentences for a set of keywords 
+
 ---
 ###Reading from file
 * decides no of columns by considering no of headings
