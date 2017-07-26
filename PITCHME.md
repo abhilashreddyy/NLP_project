@@ -1,17 +1,17 @@
 
-### Text Analysing Application using
+### Text Analyzing Application using
 ### Natural Language Processing(NLP)
 
 ---
 ## What is this application about ?
 +++
-* Organizations typically conduct a lot of surverys . To minimize the amount of works Surveys are of the form that get the users to chosse a number as an answer so that it can be easily processed. But a lot of qualitative / behavioural surveys also need to be conducted in an organization and expect the users to type in answers .
+* Organizations typically conduct a lot of surveys . To minimize the amount of works Surveys are of the form that get the users to choose a number as an answer so that it can be easily processed. But a lot of qualitative / behavioral surveys also need to be conducted in an organization and expect the users to type in answers .
   * Questions and Answers are collated as excel files since they are easier to process
   * Each sheet typically consists of questions (as columns ) and answers by multiple people (as rows )
   * Multiple surveys are stored as  sheets
 +++
 * Time consuming to read all the text and come to a conclusion
-* This application attempts to provide a better intution /summary of the answers at a glance.
+* This application attempts to provide a better intuition /summary of the answers at a glance.
 * Uses azure and google NLP cloud services
 
 +++
@@ -37,10 +37,10 @@ What is professional excellence ?
 ![Sentiment Pie Chart](/images/piechart.png)
 
 +++
-### 5. Generates a csv file ralted to most relevant answers for a set of keywords
+### 5. Generates a csv file related to most relevant answers for a set of keywords
 ---
 ### Snap shot of the project
-![Projct Snapshot](/images/project_screen_shot.png)
+![Project Snapshot](/images/project_screen_shot.png)
 
 
 +++
@@ -268,7 +268,7 @@ What is professional excellence ?
 * Keywords extracted are used for generating word cloud and extracting most relevant answers
 ---
 ### Objectives achieved with azure services
-* Uses azure *sentiment analysis*(piechart)
+* Uses azure *sentiment analysis*(pie chart)
 * Uses azure key word detection for *extracting keywords*(word cloud)
 * Uses azure *topic detection* for generating topic of each sentence (word cloud)
   * keys generated avoids noise in image
@@ -296,11 +296,11 @@ Word Cloud generated from keywords related to question
 ### Objectives achieved with google services
 * Uses google *sentiment analysis*
 * Uses google *syntax analysis*
-  * Returns every word saperately tagged with
-    * parts of speech (tag,mood,tense etc.)
+  * Returns every word separately  tagged with
+    * parts of speech (tag, mood, tense etc.)
     * dependency edge of syntax tree
     * lemma of each word
-    * Selected parts of speech(noun,verb) are used for extracting keywords  
+    * Selected parts of speech(noun, verb) are used for extracting keywords  
 * Google NLP service also have *entity analysis* which extracts *common nouns* from text
 +++
 
@@ -313,13 +313,13 @@ Word Cloud generated from keywords related to question
 
 google | azure
 -------|-------
-Returns a dictionary object | returns a json formated string
+Returns a dictionary object | returns a Json formatted  string
 takes 2.5-2.6 seconds for performing sentiment and keyword analysis | takes 2.2-2.3 seconds for performing sentiment and keyword analysis
 Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
 +++
 google | azure
 -------|-------
-best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers)
+best for combined analysis of entire file content | best for separate analysis (eg :if format is like one question many answers)
 entity recognition | do not contain this feature
 
 
@@ -328,10 +328,10 @@ entity recognition | do not contain this feature
 ---
 
 ### Asynchronous nature of code
-* (best ans most intresting part of application)
+* (best and most interesting  part of application)
 * First I sent http request to REST services **one by one**
   * as a result it **took 30 seconds** for each time compile and run
-* Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
+* Used libraries **asyncio ,aiohttp** and some features of python3 *yield from*
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 +++
 
@@ -350,17 +350,17 @@ entity recognition | do not contain this feature
 +++
 ###Pseudo Code
 * Reading from excel file .
-  * Initally checking dimensions of file .
+  * Initially checking dimensions of file .
   * read entire file column wise .
 * Send async request to cloud services .
-  * cloud services returns objects of sentiment,keywords,topics
+  * cloud services returns objects of sentiment, keywords, topics
 * Generate Word cloud .
-  * Uisng keywords nad topic
-* Generate piechart .
+  * Using keywords and topic
+* Generate pie chart .
   * count positive negative and neutral sentences 
-  * project them on piechart
+  * project them on pie chart
 +++
-* appends sentimet and keyword info to excel file .
+* appends sentiment and keyword info to excel file .
 * create a csv file with most relevant sentences for a set of keywords 
 
 ---
@@ -395,18 +395,18 @@ entity recognition | do not contain this feature
 ## generating word cloud and pie chart
 +++?code=azure.py&lang=python
 @[142-149](word cloud generation)   
-@[151-169](piechart generation)
+@[151-169](pie chart generation)
 
 ---
 ### Remaining processing
 * Same thing done with topic detection
   * but a little complicated(code)
-* Extracted most similar keys in answers from a set of initally provided keys
+* Extracted most similar keys in answers from a set of initially provided keys
 * Same thing done with google API with some changes in format of input and output
 
 ---
 ## Future scope
 * If integrated with Google or Office 365 online forums
-  * Can directly analyse online discussion forums
+  * Can directly analyze online discussion forums
 * Can add a function for gathering most relevant reviews or answers for given keywords
-* Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)
+* Python has largest support for natural language processing libraries (Spacy, NLTK etc)
