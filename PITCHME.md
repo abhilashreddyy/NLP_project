@@ -394,7 +394,7 @@ entity recognition | do not contain this feature
 ---
 ## generating word cloud and pie chart
 +++?code=azure.py&lang=python
-@[144-151](word cloud generation)   
+@[142-151](word cloud generation)   
 @[153-171](pie chart generation)
 
 ---
