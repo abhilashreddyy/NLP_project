@@ -263,7 +263,7 @@ What is professional excellence ?
 </table>
 ---
 
-* Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel filename
+* Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel file
 * Topics detected from given text corpus are used to generate word cloud
 * Keywords extracted are used for generating word cloud and extracting most relevant answers
 ---
