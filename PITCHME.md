@@ -385,11 +385,11 @@ entity recognition | do not contain this feature
 
 
 +++?code=azure.py&lang=python
-@[179-191](loads required parameters)
-@[192-195](transfer control for sending async request and location)
-@[172-176](async function)
-@[201-202](waits until response)
-@[203-221](filter required data and handle exceptions)
+@[181-193](loads required parameters)
+@[194-197](transfer control for sending async request and location)
+@[174-178](async function)
+@[203-204](waits until response)
+@[205-223](filter required data and handle exceptions)
 
 ---
 ## generating word cloud and pie chart
