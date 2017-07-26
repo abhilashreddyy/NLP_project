@@ -146,7 +146,7 @@ def send_async_request(url,data) :
     return sentiment,keywords
 
 def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
-    url = ['https://language.googleapis.com/v1/documents:analyzeSentiment?key=AIzaSyAXLdUrZI6iXYb6KwDJ4ywD0t5uUYmu3JQ','https://language.googleapis.com/v1/documents:analyzeSyntax?key=AIzaSyAXLdUrZI6iXYb6KwDJ4ywD0t5uUYmu3JQ']
+    url = ['https://language.googleapis.com/v1/documents:analyzeSentiment?key=YOUR_API_KEY','https://language.googleapis.com/v1/documents:analyzeSyntax?key=YOUR_API_KEY']
     sol,keys,no_of_sol,sol1,cloud_array,cloud_data = [],[],[],[],[],[]
     data,max_questions,dimensions,sheets = common_code.read_questions()
     tim = time.time()
