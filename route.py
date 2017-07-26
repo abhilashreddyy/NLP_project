@@ -5,6 +5,8 @@ import configparser
 import os
 import time
 from _thread import start_new_thread
+import common_code
+import google
 
 def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,thread_message):
 
@@ -64,10 +66,9 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,thread_m
                 string = string + word2 + " "
         wordcloud_text.append(string)
 
-    azure.generate_word_cloud(wordcloud_text,"keywordwise",thread_message)
+    common_code.generate_word_cloud(wordcloud_text,"keywordwise",thread_message)
 
-    value = ['environment','technical','security','passion','intelligence','customer','satisfaction']
-
+    print('Started extracting most relevant keywords')
 
     gradient = int(config['related_word_extraction_params']['gradient'])
     treshold = float(config['related_word_extraction_params']['treshold'])
@@ -81,10 +82,12 @@ def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,thread_m
     print
     q_wordcloud,extra_keys = azure.question_related_keys_extraction(simplified_keywords_info,question,gradient,treshold,thread_message)
 
-    azure.generate_word_cloud(q_wordcloud,"including_question",thread_message)
+    common_code.generate_word_cloud(q_wordcloud,"including_question",thread_message)
+    print('Completed extracting most relevant keywords')
 
 
 def grouping_topic(data,max_questions,thread_message) :
+
     config = configparser.ConfigParser()
     question_nos = []
     config.read('config.ini')
@@ -93,28 +96,31 @@ def grouping_topic(data,max_questions,thread_message) :
     topicgrouping_serviceurl = config['azure_params']['topicgrouping_serviceurl']
     count = 0
     for i,question in enumerate(data) :
+        #print(len(question))
         if len(question) > 100 :
             question_nos.append(i)
         else :
-            print("cannot send question " ,i+1, " for analysis due to insufficent data")
-
+            print("cannot send question " ,i+1, " for analysis due to insufficent data . minimum 100 answers are required for analysis")
+    print('Started grouping topics')
     response = azure.send_grouping_azure_req([data[no] for no in question_nos],topicgrouping_serviceurl,key,thread_message)
     for i in response :
         string = ''
         for j in i :
             string = string + j['keyPhrase'] + " "
         wordcloud_text.append(string)
-
-    azure.generate_word_cloud(wordcloud_text,"topicwise",thread_message,eligible_qts = question_nos)
-
+    if wordcloud_text != [] :
+        common_code.generate_word_cloud(wordcloud_text,"topicwise",thread_message,eligible_qts = question_nos)
+    print('sucessfully generated word cloud from grouped topics')
 
 def most_rel(data,value,thread_message) :
+    print("started processing most relevant answers")
     most_rel = azure.extract_most_relevant(data,value,thread_message)
     azure.write_to_file(most_rel,data,thread_message)
+    print("sucessfully completed extraction of most relevant answers")
 
 
 def route_function() :
-    data,max_questions,dimensions,sheets = azure.read_questions()
+    data,max_questions,dimensions,sheets = common_code.read_questions()
     value = [['environment','technical','security','passion','intelligence','customer','satisfaction'],['friendly','together','understanding','attitude'],['resource','time'],['clear','understanding','undertaking','review']]
     #try :
         #start_new_thread(most_rel,(data,value,"azure_most_rel_thread",))
@@ -123,7 +129,7 @@ def route_function() :
     most_rel(data,value,"azure_most_rel_thread")
     analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets,"azure_sentiment&keyword_thread")
     grouping_topic(data,max_questions,"azure_grouping_topic_thread")
-
+    #google.analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets)
     #except :
     #    print('unable to start thread !!!')
 

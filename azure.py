@@ -8,7 +8,6 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import asyncio
 import aiohttp
-import sys
 import time
 from nltk.corpus import wordnet
 import configparser
@@ -18,43 +17,8 @@ from nltk.stem import PorterStemmer
 
 
 
-def find_dimensions(wb,sheets,header_rows = 3,header_columns = 2):
-    i = 0
-    j = 0
-    dimensions = {}
-    for ws in sheets :
-        i = 0
-        j = 0
-        while wb[ws].cell(row=header_rows+i, column=header_columns-1).value != None :
-            i += 1
-        while wb[ws].cell(row=header_rows-1, column=j+header_columns).value != None :
-            j += 1
-        dimensions[ws] = [i,j]
-    return dimensions
 
 
-
-def read_questions() :
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-
-    header_rows = int(config['excel_sheet_params']['header_rows'])
-    header_columns = int(config['excel_sheet_params']['header_columns'])
-    input_file = config['excel_sheet_params']['filename']
-    output_file_name = config['excel_sheet_params']['output_xlsx_file']
-    questions = []
-    wb = load_workbook(filename = input_file)
-    sheets = wb.get_sheet_names()
-    dimensions = find_dimensions(wb,sheets,header_rows,header_columns)
-    max_questions = max(dimensions.keys(), key = lambda k: dimensions[k][1])
-    for i in range(header_columns,dimensions[max_questions][1]+header_columns):
-        questions.append([])
-        for ws in sheets:
-            if dimensions[ws][1] > i-header_columns :
-                for j in range(header_rows,dimensions[ws][0]+header_rows):
-                    questions[i-header_columns].append(wb[ws].cell(row=j, column=i).value)
-
-    return questions,dimensions[max_questions][1],dimensions,sheets
 
 def output_exel(info,max_questions,dimensions,sheets,_type,thread_message):
     config = configparser.ConfigParser()
@@ -139,16 +103,6 @@ def output_exel_with_question(info,max_questions,dimensions,sheets,_type,thread_
     wb.save(output_file_name)
 
 
-def generate_word_cloud(sol,filename,thread_message,eligible_qts = []) :
-    if eligible_qts == [] :
-        eligible_qts = [i for i in range(len(sol))]
-    for i in range(len(sol)):
-        wordcloud = WordCloud().generate(sol[i])
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.title('Word Cloud of Question '+ str(i+1), fontsize=14, fontweight='bold')
-        plt.savefig(filename + str(eligible_qts[i]+1) +".png")
-        plt.gcf().clear()
 
 def generate_piechart_for_azure_sentiment(sentiment,thread_message) :
     for i in range(len(sentiment)) :
@@ -237,65 +191,67 @@ def send_grouping_azure_req(text_data,url,key,thread_message) :
     async_res,async_req = [],[]
     res_url,res_data = [],[]
     no_of_processes = 0
-    for i in range(len(text_data)) :
-        res_url.append([])
-        res_data.append([])
+    if text_data != [] :
+        for i in range(len(text_data)) :
+            res_url.append([])
+            res_data.append([])
 
 
-    #resp_url = []
-    no_of_questons = len(text_data)
-    print(len(text_data))
-    for i in range(len(text_data)) :
-        length = len(text_data[i])
+        #resp_url = []
+        no_of_questons = len(text_data)
 
-        temp_data = {}
-        temp_data['documents'],temp_data['stopWords'],temp_data['stopPhrases'] = [],[],[]
-        for j in range(len(text_data[i])):
-            if text_data[i][j] is None or text_data[i][j].lower() is 'yes' :
-                text_data[i][j] = "yes, i agree with that"
-            element = {}
-            element['text'] = text_data[i][j]
-            element['id'] = j
-            temp_data['documents'].append(element)
+        for i in range(len(text_data)) :
+            length = len(text_data[i])
 
-            if (sys.getsizeof(temp_data['documents']) > 500000) or (length-1 == j) :
-                no_of_processes += 1
-                temp_data['stopWords'] += ['professional','Wipro', 'excellence']
-                temp_data['stopPhrases'] += ['professional excellence']
-                print('sent request : ', no_of_processes )
-                resp = requests.post(url, data = json.dumps(temp_data).encode('utf-8'), headers = {'Ocp-Apim-Subscription-Key': key, 'Content-Type':'application/json'}, params = {'numberOfLanguagesToDetect':'1'})
-                #print(thread_message,resp.headers)
-                print("got a response URL : ", no_of_processes)
-                time.sleep(61)
-                resp = resp.headers['operation-location']
-                res_url[i] += [resp]
-                temp_data = {}
-                temp_data['documents'],temp_data['stopWords'],temp_data['stopPhrases'] = [],[],[]
+            temp_data = {}
+            temp_data['documents'],temp_data['stopWords'],temp_data['stopPhrases'] = [],[],[]
+            for j in range(len(text_data[i])):
+                if text_data[i][j] is None or text_data[i][j].lower() is 'yes' :
+                    text_data[i][j] = "yes, i agree with that"
+                element = {}
+                element['text'] = text_data[i][j]
+                element['id'] = j
+                temp_data['documents'].append(element)
+
+                if (sys.getsizeof(temp_data['documents']) > 500000) or (length-1 == j) :
+                    no_of_processes += 1
+                    temp_data['stopWords'] += ['professional','Wipro', 'excellence']
+                    temp_data['stopPhrases'] += ['professional excellence']
+                    print('sent request : ', no_of_processes )
+                    resp = requests.post(url, data = json.dumps(temp_data).encode('utf-8'), headers = {'Ocp-Apim-Subscription-Key': key, 'Content-Type':'application/json'}, params = {'numberOfLanguagesToDetect':'1'})
+                    #print(thread_message,resp.headers)
+                    print("got a response URL : ", no_of_processes)
+                    if i != len(text_data)-1 :
+                        time.sleep(61)
+                    resp = resp.headers['operation-location']
+                    res_url[i] += [resp]
+                    temp_data = {}
+                    temp_data['documents'],temp_data['stopWords'],temp_data['stopPhrases'] = [],[],[]
 
 
 
 
-    #if 'operation-location' in res_info.headers :
-        #if res_info.status_code == 202:
-        #    stat_url = res_info.headers['Operation-Location']
+        #if 'operation-location' in res_info.headers :
+            #if res_info.status_code == 202:
+            #    stat_url = res_info.headers['Operation-Location']
 
-    not_ready = True
-    while not_ready:
-        proc_stat = get_operation_stat(res_url,key,thread_message)
-        flag = 0
-        completed_processes = 0
-        for i in proc_stat :
-            if i[0]['status'] == 'Succeeded' :
-                res_url[i[1]][i[2]] = 'completed'
-                res_data[i[1]] += i[0]['operationProcessingResult']['topics']
-            else :
-                flag += 1
+        not_ready = True
+        while not_ready:
+            proc_stat = get_operation_stat(res_url,key,thread_message)
+            flag = 0
+            completed_processes = 0
+            for i in proc_stat :
+                if i[0]['status'] == 'Succeeded' :
+                    res_url[i[1]][i[2]] = 'completed'
+                    res_data[i[1]] += i[0]['operationProcessingResult']['topics']
+                else :
+                    flag += 1
 
-        print(thread_message," : ",no_of_processes-flag ,"Requests completed out of ", no_of_processes)
-        if (flag != 0):
-            time.sleep(60)
-        else:
-            not_ready = False
+            print(thread_message," : ",no_of_processes-flag ,"Requests completed out of ", no_of_processes)
+            if (flag != 0):
+                time.sleep(60)
+            else:
+                not_ready = False
 
 
     #print(thread_message," : ",res_data)
