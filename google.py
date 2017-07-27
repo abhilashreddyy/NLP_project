@@ -1,15 +1,11 @@
 import requests
 import json
-import re
 import sys
 from openpyxl import load_workbook,Workbook
 import os.path
 from wordcloud import WordCloud
 import matplotlib as mpl
 mpl.use('Agg')
-import argparse
-from googleapiclient import discovery
-from oauth2client.client import GoogleCredentials
 import matplotlib.pyplot as plt
 import asyncio
 import time
