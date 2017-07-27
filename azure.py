@@ -20,11 +20,12 @@ from nltk.stem import PorterStemmer
 
 
 
+
 def output_exel(info,max_questions,dimensions,sheets,_type,thread_message):
     config = configparser.ConfigParser()
     config.read('config.ini')
     input_file = config['excel_sheet_params']['filename']
-    output_file_name = config['excel_sheet_params']['output_xlsx_file']
+    output_file_name = config['azure_params']['output_xlsx_file']
 
     if os.path.isfile(output_file_name) is True :
         wb = load_workbook(filename = output_file_name)
@@ -70,7 +71,7 @@ def output_exel_with_question(info,max_questions,dimensions,sheets,_type,thread_
     config = configparser.ConfigParser()
     config.read('config.ini')
     input_file = config['excel_sheet_params']['filename']
-    output_file_name = config['excel_sheet_params']['output_xlsx_file']
+    output_file_name = config['azure_params']['output_xlsx_file']
     header_rows = int(config['excel_sheet_params']['header_rows'])
     header_columns = int(config['excel_sheet_params']['header_columns'])
 

@@ -1,30 +1,27 @@
 
-### Text Analyzing Application using
+### Text Analysing Application using
 ### Natural Language Processing(NLP)
 
 ---
 ## What is this application about ?
 +++
-* Organizations typically conduct a lot of surveys . To minimize the amount of works Surveys are of the form that get the users to choose a number as an answer so that it can be easily processed. But a lot of qualitative / behavioral surveys also need to be conducted in an organization and expect the users to type in answers .
-  * Questions and Answers are collated as excel files since they are easier to process
-  * Each sheet typically consists of questions (as columns ) and answers by multiple people (as rows )
-  * Multiple surveys are stored as  sheets
-+++
+* Surveys consists of large amount of text
+  * I this case we have an excel file
+  * File consists of sheets
+  * each file consists of questions and multiple answers by multiple people
 * Time consuming to read all the text and come to a conclusion
-* This application attempts to provide a better intuition /summary of the answers at a glance.
+* This application gives better intution over data in less time
 * Uses azure and google NLP cloud services
 
 +++
 Screen shot of input data
 ![Sentiment Pie Chart](/images/data.png)
 ---
-## What this application does ?
+## What this application can do ?
 +++
-### 1. Detects Sentiment of an answer . Appends a column to the Excel sheet with sentiment
-
-### 2. Detects the keywords  of an answers and adds a column to the Excel sheet with the keyword
+### 1. generates a excel file which is similar to provided excel file but sentiment and keywords are appended to data
 +++
-### 3. Generates a Word Cloud of Keywords for each question ( based on the keyword and Topic )
+### 2. Generates Word Cloud from text
 
 <img src="images/wordcloud.png" width="500" height = "300" float = 'right'>
 
@@ -33,242 +30,25 @@ What is professional excellence ?
 
 
 +++
-### 4. Generates Pie charts illustrating sentiment of data
+### 3. Generates Pie charts illustrating sentiment of data
 ![Sentiment Pie Chart](/images/piechart.png)
 
 +++
-### 5. Generates a csv file related to most relevant answers for a set of keywords
+### 4. Generates a csv file ralted to most relevant answers for a set of keywords
 ---
-### Snap shot of the project
-![Project Snapshot](/images/project_screen_shot.png)
-
-
-+++
-* Duration  
-  * 8 weeks
-
-* Number of people
-  * 1
----
-### Functional Objectives
+### Objectives
 * Sentiment analysis
 * Key-words extraction
 * Topic detection
-* Extract most relevant answers for given keywords ( by using the data of the question )
-+++
-### Other Objectives
-* Provide a test bed to evaluate the Google Cloud NLP and Azure NLP Cloud Services
-* Evaluate the feasibility of not using local version (e.g) Spacy / Stanford NLP
-* Evaluate the possibility of offering this as a service for Office 365 Forms
----
-## Features of Google NLP
-+++
-* Sentiment Analysis
-<table>
-  <tbody>
-    <tr>
-      <th>Input</th>
-      <th>Output</th>
-    </tr>
-    <tr>
-      <td><pre>{
-  "encodingType": "UTF8",
-  "document": {
-    "type": "PLAIN_TEXT",
-    "content": "Enjoy your vacation!"
-  }
-}</pre></td>
-      <td><pre>{
-  "documentSentiment": {
-    "magnitude": 0.8,
-    "score": 0.8
-  },
-  "language": "en",
-  "sentences": [
-    {
-      "text": {
-        "content": "Enjoy your vacation!",
-        "beginOffset": 0
-      },
-      "sentiment": {
-        "magnitude": 0.8,
-        "score": 0.8
-      }
-    }
-  ]
-}</pre></td>
-    </tr>
-  </tbody>
-</table>
-+++
-* Entity analysis
-```json
-  {
-  "entities": [
-    {
-      "name": "Lawrence of Arabia",
-      "type": "WORK_OF_ART",
-      "metadata": {
-        "mid": "/m/0bx0l",
-        "wikipedia_url": "http://en.wikipedia.org/wiki/Lawrence_of_Arabia_(film)"
-      },
-      "salience": 0.75222147,
-      "mentions": [
-        {
-          "text": {
-            "content": "Lawrence of Arabia",
-            "beginOffset": 1
-          },
-          "type": "PROPER"
-        },
-        {
-          "text": {
-            "content": "film biography",
-            "beginOffset": 39
-          },
-          "type": "COMMON"
-        }
-      ]
-    },
-```
-+++
-* Syntax Analysis
-```json
-   {
-      "text": {
-        "content": "is",
-        "beginOffset": 35
-      },
-      "partOfSpeech": {
-        "tag": "VERB",
-        "mood": "INDICATIVE",                                
-        "number": "SINGULAR",
-        "person": "THIRD",
-        "tense": "PRESENT",
-      },
-      "dependencyEdge": {
-        "headTokenIndex": 7,
-        "label": "ROOT"
-      },
-      "lemma": "be"
-    },
-```
----
-## Features of Azure NLP
-+++
-* Input to azure services
-```
-{
-     "documents": [
-         {
-             "language": "en",
-             "id": "1",
-             "text": "First document"                                     
-         },
-         ...
-         {
-             "language": "en",
-             "id": "100",
-             "text": "Final document"
-         }
-     ]
- }
-```
-+++
-* Sentiment Analysis
-```
-{
-       "documents": [
-         {
-             "id": "1",
-             "score": "0.934"             
-         },
-         ...
-         {
-             "id": "100",
-             "score": "0.002"                          
-         },
-     ]
- }
-```
-+++
-* Key phrases Extraction
-```
-{
-       "documents": [
-         {
-             "id": "1",
-             "keyPhrases": ["key phrase 1", ..., "key phrase n"]
-         },
-         ...
-         {
-             "id": "100",
-             "keyPhrases": ["key phrase 1", ..., "key phrase n"]
-         },
-     ]
- }
-```
-+++
-### Topic Detection
-* Send request to azure services
-* Responds with an URL representing the location where computation of topic detection is performed
-* Send get request to URL
-* Responds with detected Topics 
-+++
-<table>
-  <tbody>
-    <tr>
-      <th>Input</th>
-      <th>Output</th>
-    </tr>
-    <tr>
-      <td><pre>{
-     "documents": [
-         {
-             "id": "1",
-             "text": "First document"
-         },
-         ...
-         {
-             "id": "100",
-             "text": "Final document"
-         }
-     ],
-     "stopWords": [
-         "issue", "error", "user"
-     ],
-     "stopPhrases": [
-         "Microsoft", "Azure"
-     ]
- }
-</pre></td>
-      <td><pre>{
-        "topics" : [{
-            "id" : "string",
-            "score" : "number",
-            "keyPhrase" : "string"
-        }],
-        "topicAssignments" : [{
-            "documentId" : "string",
-            "topicId" : "string",
-            "distance" : "number"
-        }],
-        "errors" : [{
-            "id" : "string",
-            "message" : "string"
-        }]
-    }</pre></td>
-    </tr>
-  </tbody>
-</table>
----
+* extract most relevant answers for given keywords
 
-* Request cloud services for sentiment of each response for a survey and append sentiment to respective response in excel file
+---
+* Request cloud services for sentimet of each response for a survey and append sentiment to respective response in excel filename
 * Topics detected from given text corpus are used to generate word cloud
 * Keywords extracted are used for generating word cloud and extracting most relevant answers
 ---
 ### Objectives achieved with azure services
-* Uses azure *sentiment analysis*(pie chart)
+* Uses azure *sentiment analysis*(piechart)
 * Uses azure key word detection for *extracting keywords*(word cloud)
 * Uses azure *topic detection* for generating topic of each sentence (word cloud)
   * keys generated avoids noise in image
@@ -296,11 +76,11 @@ Word Cloud generated from keywords related to question
 ### Objectives achieved with google services
 * Uses google *sentiment analysis*
 * Uses google *syntax analysis*
-  * Returns every word separately  tagged with
-    * parts of speech (tag, mood, tense etc.)
+  * Returns every word saperately tagged with
+    * parts of speech (tag,mood,tense etc.)
     * dependency edge of syntax tree
     * lemma of each word
-    * Selected parts of speech(noun, verb) are used for extracting keywords  
+    * Selected parts of speech(noun,verb) are used for extracting keywords  
 * Google NLP service also have *entity analysis* which extracts *common nouns* from text
 +++
 
@@ -309,17 +89,17 @@ Word Cloud generated from keywords related to question
 ![Sentiment Pie Chart](/images/googlewordcloud.png)
 
 ---
-### comparison of google and azure services
+### comparison of google andd azure services
 
 google | azure
 -------|-------
-Returns a dictionary object | returns a Json formatted  string
+Returns a dictionary object | returns a json formatted string
 takes 2.5-2.6 seconds for performing sentiment and keyword analysis | takes 2.2-2.3 seconds for performing sentiment and keyword analysis
 Do not have this features | takes 7-8 + no-of-questions minutes for topic detection
 +++
 google | azure
 -------|-------
-best for combined analysis of entire file content | best for separate analysis (eg :if format is like one question many answers)
+best for combined analysis of entire file content | best for seperate analysis (eg :if format is like one question many answers)
 entity recognition | do not contain this feature
 
 
@@ -328,10 +108,10 @@ entity recognition | do not contain this feature
 ---
 
 ### Asynchronous nature of code
-* (best and most interesting  part of application)
+* (best ans most intresting part of application)
 * First I sent http request to REST services **one by one**
   * as a result it **took 30 seconds** for each time compile and run
-* Used libraries **asyncio ,aiohttp** and some features of python3 *yield from*
+* Used libraries **asyncio,aiohttp** and some features of python3 *yield from*
 * When i made it **asynchronous** it took **less than 3 seconds** for compile and run
 +++
 
@@ -350,19 +130,16 @@ entity recognition | do not contain this feature
 +++
 ###Pseudo Code
 * Reading from excel file .
-  * Initially checking dimensions of file .
+  * Initally checking dimensions of file .
   * read entire file column wise .
 * Send async request to cloud services .
-  * cloud services returns objects of sentiment, keywords, topics
 * Generate Word cloud .
-  * Using keywords and topic
-* Generate pie chart .
-  * count positive negative and neutral sentences 
-  * project them on pie chart
-+++
-* appends sentiment and keyword info to excel file .
-* create a csv file with most relevant sentences for a set of keywords 
-
+  * Uisng keywords
+* Generate piechart .
+  * count positive negative and neutral sentences
+  * project them on piechart
+* Write sentimet and keyword info to excel file .
+* 
 ---
 ###Reading from file
 * decides no of columns by considering no of headings
@@ -370,11 +147,11 @@ entity recognition | do not contain this feature
 * returns 2d list of strings and dimensions of each sheet and name of sheets in workbook(excel file)
 * next slide consists of code chunk which performs this operation
 
-+++?code=common_code.py&lang=python
-@[23-33](loads parameters and file required to read)
-@[34](finds dimensions of sheet)
-@[7-19](finds dimensions of sheet)
-@[35-43](returns data in sheet)
++++?code=azure.py&lang=python
+@[37-47](loads parameters and file required to read)
+@[48](finds dimensions of sheet)
+@[21-33](finds dimensions of sheet)
+@[49-57](returns data in sheet)
 
 ---
 
@@ -385,29 +162,28 @@ entity recognition | do not contain this feature
 
 
 +++?code=azure.py&lang=python
-@[135-146](loads required parameters)
-@[147-151](transfer control for sending async request and location)
-@[128-132](async function)
-@[157-158](waits until response)
-@[159-177](filter required data and handle exceptions)
+@[179-191](loads required parameters)
+@[192-195](transfer control for sending async request and location)
+@[172-176](async function)
+@[201-202](waits until response)
+@[203-221](filter required data and handle exceptions)
 
 ---
 ## generating word cloud and pie chart
-+++?code=common_code.py&lang=python
-@[45-54](word cloud generation)   
 +++?code=azure.py&lang=python
-@[107-125](pie chart generation)
+@[142-149](word cloud generation)   
+@[151-169](piechart generation)
 
 ---
 ### Remaining processing
 * Same thing done with topic detection
   * but a little complicated(code)
-* Extracted most similar keys in answers from a set of initially provided keys
+* Extracted most similar keys in answers from a set of initally provided keys
 * Same thing done with google API with some changes in format of input and output
 
 ---
 ## Future scope
 * If integrated with Google or Office 365 online forums
-  * Can directly analyze online discussion forums
+  * Can directly analyse online discussion forums
 * Can add a function for gathering most relevant reviews or answers for given keywords
-* Python has largest support for natural language processing libraries (Spacy, NLTK etc)
+* Pythom has largest support for natural language processing libraries (Spacy,NLTK etc)

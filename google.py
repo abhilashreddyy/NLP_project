@@ -16,15 +16,20 @@ import time
 import aiohttp
 import configparser
 import common_code
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 
 def output_exel(info,max_questions,dimensions,sheets,_type):
-
-    if os.path.isfile('analysis.xlsx') is True :
-        wb = load_workbook(filename = "analysis.xlsx")
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    input_file_name  = config['excel_sheet_params']['filename']
+    output_file_name = config['google_params']['output_xlsx_file']
+    if os.path.isfile(output_file_name) is True :
+        wb = load_workbook(filename = output_file_name)
         sheets = wb.get_sheet_names()
     else :
-        wb1 = load_workbook(filename = "data.xlsx")
+        wb1 = load_workbook(filename = input_file_name)
         wb = Workbook()
         wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
         for sheet in sheets:
@@ -57,17 +62,20 @@ def output_exel(info,max_questions,dimensions,sheets,_type):
                     ws.cell(row = i+3, column = j+2, value = str(tag_string + str(info[j][ans_no][key_value])))
                     ans_no += 1
 
-    wb.save('analysis.xlsx')
+    wb.save(output_file_name)
 
 def output_sentimnet_exel(info,max_questions,dimensions,sheets):
-
-    if os.path.isfile('analysis.xlsx') is True :
-        wb = load_workbook(filename = "analysis.xlsx")
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    input_file_name  = config['excel_sheet_params']['filename']
+    output_file_name = config['google_params']['output_xlsx_file']
+    if os.path.isfile(output_file_name) is True :
+        wb = load_workbook(filename = output_file_name)
         sheets = wb.get_sheet_names()
     else :
-        wb = load_workbook(filename = "data.xlsx")
-        wb.save("analysis.xlsx")
-        wb = load_workbook(filename = "analysis.xlsx")
+        wb = load_workbook(filename = input_file_name)
+        wb.save(output_file_name)
+        wb = load_workbook(filename = output_file_name)
 
     for j in range(max_questions):
         ans_no = 0
@@ -84,7 +92,7 @@ def output_sentimnet_exel(info,max_questions,dimensions,sheets):
                     ws.cell(row = i+3, column = j+2, value = str('sentiment score : ' + str(info[j][ans_no]['sentiment']['score'])))
                     ans_no += 1
 
-    wb.save('analysis.xlsx')
+    wb.save(output_file_name)
 
 
 def generate_piechart_for_google_sentiment(sentiment) :
@@ -146,7 +154,11 @@ def send_async_request(url,data) :
     return sentiment,keywords
 
 def analysis_sentiment_and_keyword(data,max_questions,dimensions,sheets):
-    url = ['https://language.googleapis.com/v1/documents:analyzeSentiment?key=YOUR_API_KEY','https://language.googleapis.com/v1/documents:analyzeSyntax?key=YOUR_API_KEY']
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    sentiment_serviceurl = config['google_params']['sentiment_serviceurl']+config['google_params']['api_key']
+    syntax_serviceurl = config['google_params']['syntax_serviceurl']+config['google_params']['api_key']
+    url = [sentiment_serviceurl,syntax_serviceurl]
     sol,keys,no_of_sol,sol1,cloud_array,cloud_data = [],[],[],[],[],[]
     data,max_questions,dimensions,sheets = common_code.read_questions()
     tim = time.time()

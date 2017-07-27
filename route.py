@@ -135,7 +135,9 @@ def route_function() :
 
 if __name__ == '__main__' :
     try:
-        os.remove('analysis.xlsx')
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        os.remove(config['azure_params']['output_xlsx_file'])
     except OSError:
         pass
 
