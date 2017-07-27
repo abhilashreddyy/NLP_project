@@ -6,7 +6,7 @@ for presentation please visit [![GitPitch](https://gitpitch.com/assets/badge.svg
 ## Installation Procedure
 
 * Install python3 in system
-* Run command ```pip3 install requirements.txt```
+* Run command ```pip3 install -r requirements.txt```
 * run all commands in **command.txt** file
 * add your *api keys* in **config.ini** file
 * read comments in **config.ini** to configure the application
