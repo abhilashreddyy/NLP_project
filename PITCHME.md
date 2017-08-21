@@ -147,7 +147,7 @@ entity recognition | do not contain this feature
 * returns 2d list of strings and dimensions of each sheet and name of sheets in workbook(excel file)
 * next slide consists of code chunk which performs this operation
 
-+++?code=azure.py&lang=python
++++?code=code/azure.py&lang=python
 @[37-47](loads parameters and file required to read)
 @[48](finds dimensions of sheet)
 @[21-33](finds dimensions of sheet)
@@ -161,7 +161,7 @@ entity recognition | do not contain this feature
 * waits until all responds
 
 
-+++?code=azure.py&lang=python
++++?code=code/azure.py&lang=python
 @[179-191](loads required parameters)
 @[192-195](transfer control for sending async request and location)
 @[172-176](async function)
@@ -170,7 +170,7 @@ entity recognition | do not contain this feature
 
 ---
 ## generating word cloud and pie chart
-+++?code=azure.py&lang=python
++++?code=code/azure.py&lang=python
 @[142-149](word cloud generation)   
 @[151-169](piechart generation)
 
