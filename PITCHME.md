@@ -166,11 +166,11 @@ entity recognition | do not contain this feature
 @[16-20](prime numbers example)
 
 +++?code=code/azure.py&lang=python
-@[179-191](loads required parameters)
-@[192-195](transfer control for sending async request and location)
-@[172-176](async function)
-@[201-202](waits until response)
-@[203-221](filter required data and handle exceptions)
+@[136-147](loads required parameters)
+@[148-155](transfer control for sending async request and location)
+@[129-133](async function)
+@[158-167](waits until response)
+@[168-178](filter required data and handle exceptions)
 
 
 ---
