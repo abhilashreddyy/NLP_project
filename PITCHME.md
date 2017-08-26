@@ -160,6 +160,10 @@ entity recognition | do not contain this feature
 * stores their memory locations
 * waits until all responds
 
++++?code=tempcode.py&lang=python
+@[2-5](generator function)
+@[7-13](running generator function)
+@[16-20](prime numbers example)
 
 +++?code=code/azure.py&lang=python
 @[179-191](loads required parameters)
@@ -167,6 +171,7 @@ entity recognition | do not contain this feature
 @[172-176](async function)
 @[201-202](waits until response)
 @[203-221](filter required data and handle exceptions)
+
 
 ---
 ## generating word cloud and pie chart
