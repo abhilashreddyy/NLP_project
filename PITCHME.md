@@ -128,7 +128,7 @@ entity recognition | do not contain this feature
 ---
 # Design of Application
 +++
-###Pseudo Code
+### Pseudo Code
 * Reading from excel file .
   * Initally checking dimensions of file .
   * read entire file column wise .
@@ -141,7 +141,7 @@ entity recognition | do not contain this feature
 * Write sentimet and keyword info to excel file .
 * 
 ---
-###Reading from file
+### Reading from file
 * decides no of columns by considering no of headings
 * decides no of rows by considering no of numbers in first column
 * returns 2d list of strings and dimensions of each sheet and name of sheets in workbook(excel file)
@@ -155,7 +155,7 @@ entity recognition | do not contain this feature
 
 ---
 
-###sending async request to azure cloud service
+### sending async request to azure cloud service
 * Trigger to sends all requests
 * stores their memory locations
 * waits until all responds
